@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+    {% block encabezado %}
         <title>Adopta Tu Mascota</title>
+    {% endblock encabezado %}
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -114,34 +116,34 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- About Section-->
+       <!--   </section>
+       About Section
         <section class="page-section bg-primary text-white mb-0" id="about">
             <div class="container">
-                <!-- About Section Heading-->
+                     About Section Heading
                 <h2 class="page-section-heading text-center text-uppercase text-white">Sobre Nosotros</h2>
-                <!-- Icon Divider-->
+                    Icon Divider
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- About Section Content-->
+                About Section Content
                 <div class="row">
                     <div class="col-lg-4 ms-auto"><p class="lead">Somos una fundacion con mas de 5 años de experiencia dedicada al cuidado y recuperación de mascotas en situacion de calle o abandono </p></div>
                     <div class="col-lg-4 me-auto"><p class="lead">Con mas de mil animales rescatados, Este portal es tu oportunidad unica para traerle felicidad y amor a tu vida al adoptar tu mascota</p></div>
                 </div>
             </div>
-        </section>
-        <!-- Footer-->
+        </section> -->
+      <!-- Footer-->
         <footer class="footer text-center">
             <div class="container">
                 <div class="row">
                     <!-- Footer Location-->
                     <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4">Veni a Visitarnos!</h4>
+                        <h4 class="text-uppercase mb-4">Sobre Nosotros</h4>
                         <p class="lead mb-0">
-                            Luis de Agote 555, Montevideo, Uruguay
+                            <a class="btn btn-outline-light btn-social mx-1" target="_blank" href="{% url 'sobrenosotros' %}"><i class="fab fa-fw fa-dribbble"></i></a>
                             <br />
                         </p>
                     </div>
@@ -151,7 +153,6 @@
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
-                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
                     </div>
                 </div>
             </div>

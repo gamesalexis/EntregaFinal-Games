@@ -13,6 +13,8 @@ def gatos(request):
     return render (request, "blog/gatos.html")
 def adoptantes(request):
     return render (request, "blog/usuarios.html")
+def sobrenosotros(request):
+    return render (request, "blog/sobrenosotros.html")
 
 
 # SECCION FORMULARIOS
