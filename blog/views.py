@@ -5,6 +5,8 @@ from blog.forms import *
 
 # INICIO
 
+def iniciosinlogin(request):
+    return render (request, "blog/iniciosinlogin.html")
 def inicio(request):
     return render (request, "blog/inicio.html")
 def perros(request):
