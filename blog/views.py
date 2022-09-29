@@ -3,24 +3,75 @@ from blog.models import *
 from django.http import HttpResponse
 from blog.forms import *
 
+from django.urls import reverse_lazy
+
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+
+from django.contrib.auth.decorators import login_required
+
+
 # INICIO
 
-def iniciosinlogin(request):
-    return render (request, "blog/iniciosinlogin.html")
 def inicio(request):
     return render (request, "blog/inicio.html")
+
+@login_required
+def iniciologin(request):
+    return render (request, "blog/iniciologin.html")
+
+
 def perros(request):
     return render (request, "blog/perros.html")
+
 def gatos(request):
     return render (request, "blog/gatos.html")
+
 def adoptantes(request):
     return render (request, "blog/usuarios.html")
+
+# SECCION SOBRE NOSOTROS
+
 def sobrenosotros(request):
     return render (request, "blog/sobrenosotros.html")
 
+# SECCION LOGIN
+
+def login_request(request):
+    if request.method=="POST":
+        form=AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usu=request.POST["username"]
+            clave=request.POST["password"]
+
+            usuario=authenticate(username=usu, password=clave)
+            if usuario is not None:
+                login(request, usuario)
+                return render(request, 'blog/iniciologin.html', {'mensaje':f"Bienvenido {usuario}"})
+            else:
+                return render(request, "blog/login.html", {"formulario":form, "mensaje":"Usuario o contraseña incorrectos"})
+        else:
+            return render(request, "blog/login.html", {"formulario":form, "mensaje":"Usuario o contraseña incorrectos"})
+    else:
+        form=AuthenticationForm()
+        return render(request, "blog/login.html", {"formulario":form})
+
+
+def register(request):
+    if request.method=="POST":
+        form=UserRegisterForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data.get('username')
+            form.save()
+            return render(request, "blog/login.html", {"mensaje":f"Usuario {username} creado correctamente"})
+        else:
+            return render(request, "blog/register.html", {"formulario":form, "mensaje":"Formulario Invalido"})
+    else:
+        form=UserRegisterForm()
+        return render(request, "blog/register.html", {"formulario":form})
+
 
 # SECCION FORMULARIOS
-
 
 def perrosformulario(request):
 
