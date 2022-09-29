@@ -13,8 +13,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'inicio' %}">Inicio</a></li> 
-                </ul>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'agregaravatar' %}"><img src="{{ avatar }}" width="50px"></a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'inicio' %}">Inicio</a></li>   
+            </ul>
             </div>
         </div>
     </nav>
@@ -31,5 +32,6 @@
     </table>
     <input type="submit" value="Guardar Cambios">
 </form>
+
 <h2>{{ mensaje }}</h2>
 {% endblock %}

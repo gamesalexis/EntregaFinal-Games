@@ -9,13 +9,14 @@ urlpatterns = [
     path("register/", register, name="register"),
     path('logout/', LogoutView.as_view(template_name='blog/logout.html'), name='logout'),
     path("perfil/", perfil, name="perfil"),
+    path('agregaravatar/', agregaravatar, name='agregaravatar'),
 
     #OTROS
     path("sobrenosotros/", sobrenosotros, name="sobrenosotros"),
     
     #INICIO
-    path("", inicio, name="inicio"),
     path("", iniciologin, name="iniciologin"),
+    path("inicio", inicio, name="inicio"),
     path("perros/", perros, name="perros"),
     path("gatos/", gatos, name="gatos"),
     path("usuarios/", adoptantes, name="usuarios"),

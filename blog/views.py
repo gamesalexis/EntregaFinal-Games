@@ -10,13 +10,12 @@ from django.contrib.auth.decorators import login_required
 
 # INICIO
 
-def inicio(request):
-    return render (request, "blog/inicio.html")
-
-@login_required
 def iniciologin(request):
     return render (request, "blog/iniciologin.html")
 
+@login_required
+def inicio(request):
+    return render (request, "blog/inicio.html" ,{"avatar":obteneravatar(request)})
 
 def perros(request):
     return render (request, "blog/perros.html")
@@ -84,8 +83,26 @@ def perfil(request):
             return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario, "mensaje":"FORMULARIO INVALIDO"})
     else:
         form= UserEditForm(instance=usuario)
-    return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario})
+    return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario, "avatar":obteneravatar(request)})
 
+
+@login_required
+def agregaravatar(request):
+    if request.method=='POST':
+        formulario=AvatarForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            avatarViejo=Avatar.objects.filter(user=request.user)
+            if(len(avatarViejo)>0):
+                avatarViejo[0].delete()
+            avatar=Avatar(user=request.user, imagen=formulario.cleaned_data['imagen'])
+            avatar.save()
+            return render(request, 'blog/perfil.html', {'usuario':request.user, 'mensaje':'AVATAR AGREGADO EXITOSAMENTE', "avatar": avatar.imagen.url})
+        else:
+            return render(request, 'blog/agregaravatar.html', {'formulario':formulario, 'mensaje':'FORMULARIO INVALIDO'})
+        
+    else:
+        formulario=AvatarForm()
+        return render(request, "blog/agregaravatar.html", {"formulario":formulario, "usuario":request.user, "avatar": obteneravatar(request)})
 
 def obteneravatar(request):
     lista=Avatar.objects.filter(user=request.user)
