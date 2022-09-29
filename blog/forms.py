@@ -25,11 +25,25 @@ class UsuariosFormulario(forms.Form):
 #ULTIMA ENTREGA
 
 class UserRegisterForm(UserCreationForm):
+    first_name=forms.CharField(label='Nombre')
+    last_name=forms.CharField(label='Apellido')
     email = forms.EmailField()
     password1= forms.CharField(label="Ingrese Contraseña", widget=forms.PasswordInput)
     password2= forms.CharField(label="Repita Contraseña", widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['first_name','last_name','username', 'email', 'password1', 'password2']
+        help_texts = {k:"" for k in fields}
+
+class UserEditForm(UserCreationForm):
+    first_name=forms.CharField(label='Nombre')
+    last_name=forms.CharField(label='Apellido')
+    email = forms.EmailField()
+    password1= forms.CharField(label="Modificar Contraseña", widget=forms.PasswordInput)
+    password2= forms.CharField(label="Repita Contraseña", widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = [ 'first_name', 'last_name','email', 'password1', 'password2',]
         help_texts = {k:"" for k in fields}

@@ -8,6 +8,7 @@ urlpatterns = [
     path("login/", login_request, name="login"),
     path("register/", register, name="register"),
     path('logout/', LogoutView.as_view(template_name='blog/logout.html'), name='logout'),
+    path("perfil/", perfil, name="perfil"),
 
     #OTROS
     path("sobrenosotros/", sobrenosotros, name="sobrenosotros"),

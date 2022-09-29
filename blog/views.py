@@ -2,12 +2,9 @@ from django.shortcuts import render
 from blog.models import *
 from django.http import HttpResponse
 from blog.forms import *
-
 from django.urls import reverse_lazy
-
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
-
 from django.contrib.auth.decorators import login_required
 
 
@@ -23,12 +20,11 @@ def iniciologin(request):
 
 def perros(request):
     return render (request, "blog/perros.html")
-
 def gatos(request):
     return render (request, "blog/gatos.html")
-
 def adoptantes(request):
     return render (request, "blog/usuarios.html")
+
 
 # SECCION SOBRE NOSOTROS
 
@@ -47,7 +43,7 @@ def login_request(request):
             usuario=authenticate(username=usu, password=clave)
             if usuario is not None:
                 login(request, usuario)
-                return render(request, 'blog/iniciologin.html', {'mensaje':f"Bienvenido {usuario}"})
+                return render(request, 'blog/inicio.html', {'mensaje':f"Bienvenido {usuario}"})
             else:
                 return render(request, "blog/login.html", {"formulario":form, "mensaje":"Usuario o contraseña incorrectos"})
         else:
@@ -69,6 +65,38 @@ def register(request):
     else:
         form=UserRegisterForm()
         return render(request, "blog/register.html", {"formulario":form})
+
+@login_required
+def perfil(request):    
+    usuario=request.user
+    if request.method=="POST":
+        form=UserEditForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            usuario.first_name=info["first_name"]
+            usuario.last_name=info["last_name"]
+            usuario.email=info["email"]
+            usuario.password1=info["password1"]
+            usuario.password2=info["password2"]
+            usuario.save()
+            return render(request, "blog/inicio.html", {"mensaje":"Perfil editado correctamente"})
+        else:
+            return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario, "mensaje":"FORMULARIO INVALIDO"})
+    else:
+        form= UserEditForm(instance=usuario)
+    return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario})
+
+
+def obteneravatar(request):
+    lista=Avatar.objects.filter(user=request.user)
+    if len(lista)!=0:
+        imagen=lista[0].imagen.url
+    else:
+        imagen="/media/avatares/avatarpordefecto.jpg"
+    return imagen
+
+
+
 
 
 # SECCION FORMULARIOS
@@ -168,5 +196,3 @@ def ubuscar(request):
         return render(request, "blog/usuariosresultados.html", {"Usuario":Usuario})
     else:
         return render(request, "blog/usuariosbuscar.html", {"mensaje":"No se encuentra Usuario"})
-
-#Se probo que todo funcionace bien
