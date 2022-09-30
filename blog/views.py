@@ -17,20 +17,12 @@ def iniciologin(request):
 def inicio(request):
     return render (request, "blog/inicio.html" ,{"avatar":obteneravatar(request)})
 
-def perros(request):
-    return render (request, "blog/perros.html")
-def gatos(request):
-    return render (request, "blog/gatos.html")
-def adoptantes(request):
-    return render (request, "blog/usuarios.html")
-
-
-# SECCION SOBRE NOSOTROS
+# OTROS
 
 def sobrenosotros(request):
     return render (request, "blog/sobrenosotros.html")
 
-# SECCION LOGIN
+# LOGIN-LOGOUT
 
 def login_request(request):
     if request.method=="POST":
@@ -85,7 +77,6 @@ def perfil(request):
         form= UserEditForm(instance=usuario)
     return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario, "avatar":obteneravatar(request)})
 
-
 @login_required
 def agregaravatar(request):
     if request.method=='POST':
@@ -113,11 +104,43 @@ def obteneravatar(request):
     return imagen
 
 
+# PUBLICACIONES
+
+@login_required
+def publicaciones(request):
+    return render (request, "blog/publicaciones.html" ,{"avatar":obteneravatar(request)})
+
+@login_required
+def publicar(request):
+    return render (request, "blog/publicar.html" ,{"avatar":obteneravatar(request)})
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#PRIMERA ENTREGA
+# SECCION INICIO
+def perros(request):
+    return render (request, "blog/perros.html")
+def gatos(request):
+    return render (request, "blog/gatos.html")
+def adoptantes(request):
+    return render (request, "blog/usuarios.html")
 # SECCION FORMULARIOS
-
 def perrosformulario(request):
 
     if request.method=="POST":
@@ -134,8 +157,6 @@ def perrosformulario(request):
     else:
         form= PerrosFormulario()
         return render(request, "blog/perrosformulario.html", {"formulario":form})
-
-
 def gatosformulario(request):
 
     if request.method=="POST":
@@ -152,8 +173,6 @@ def gatosformulario(request):
     else:
         form= GatosFormulario()
         return render(request, "blog/gatosformulario.html", {"formulario":form})
-
-
 def usuariosformulario(request):
 
     if request.method=="POST":
@@ -172,14 +191,9 @@ def usuariosformulario(request):
     else:
         form= UsuariosFormulario()
         return render(request, "blog/usuariosformulario.html", {"formulario":form})
-
-
 #SECCION BUSQUEDA
-
-
 def perrosbuscar(request):
     return render(request, "blog/perrosbuscar.html")
-
 def pbuscar(request):
 
     if request.GET["raza"]:
@@ -188,10 +202,8 @@ def pbuscar(request):
         return render(request, "blog/perrosresultados.html", {"Perro":Perro})
     else:
         return render(request, "blog/perrosbuscar.html", {"mensaje":"No se encuentra Perro"})
-
 def gatosbuscar(request):
     return render(request, "blog/gatosbuscar.html")
-
 def gbuscar(request):
 
     if request.GET["edad"]:
@@ -200,11 +212,8 @@ def gbuscar(request):
         return render(request, "blog/gatosresultados.html", {"Gato":Gato})
     else:
         return render(request, "blog/gatosbuscar.html", {"mensaje":"No se encuentra Gato"})
-
-
 def usuariosbuscar(request):
     return render(request, "blog/usuariosbuscar.html")
-
 def ubuscar(request):
 
     if request.GET["nombre"]:
