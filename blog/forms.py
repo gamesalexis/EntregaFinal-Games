@@ -43,9 +43,8 @@ class PublicacionesFormulario(forms.ModelForm):
 
     class Meta:
         model = Publicaciones
-        #fields = '__all__'
-        fields = ['nombre', 'edad','especie','raza']
-        #help_texts = {k:"" for k in fields}
+        fields = ['nombre', 'edad','especie','raza', 'descripcion', 'imagen',]
+        help_texts = {k:"" for k in fields}
 
 
 
