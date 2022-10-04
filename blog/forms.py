@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from .models import *
 
+
 #ULTIMA ENTREGA
 #LOGIN LOGOUT
 class UserRegisterForm(UserCreationForm):
@@ -43,8 +44,7 @@ class PublicacionesFormulario(forms.ModelForm):
 
     class Meta:
         model = Publicaciones
-        fields = ['nombre', 'edad','especie','raza', 'descripcion', 'imagen',]
-        help_texts = {k:"" for k in fields}
+        fields = ['nombre', 'edad','especie','raza', 'descripcion', 'imagen']
 
 
 

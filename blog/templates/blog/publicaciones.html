@@ -27,15 +27,27 @@
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
         </div>
-<form action="{% url 'perfil' %}" method="POST"> {% csrf_token %}
-    <table>
-        {{ model }}
-        {{ formulario.as_table }}
-    </table>
-    <input type="submit" value="Guardar Cambios">
-</form>
+        
+</header>
+<section>
+    <div class="container">
+        <!-- Portfolio Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"></h2>
+        <!-- Portfolio Grid Items-->
+        <div class="row justify-content-left">
+            <!-- Portfolio Item 1-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
 
-<h2>{{ mensaje }}</h2>
+{% if mascotas %}
+<ul>
+    {% for mascota in mascotas %}
+         <h4>{{ mascota.nombre }}</h4>
+    {% endfor %}
+</ul>
 
-
+{% else %}
+<p>No Tiene Publicaciones Vigentes</p>
+{% endif %}
+</section>
 {% endblock %}

@@ -21,7 +21,6 @@ urlpatterns = [
    #PUBLICACIONES
     path("publicaciones/", publicaciones, name="publicaciones"),
     path("publicar/", publicar, name="publicar"),
-    
 
 
 

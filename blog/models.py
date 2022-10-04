@@ -16,14 +16,15 @@ class Avatar(models.Model):
 opciones_especie=[(0, "Sin Definir"),(1, "Perro"),(2, "Gato"),(3, "Otro")]
 
 class Publicaciones(models.Model):
+    
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     nombre=models.CharField(max_length=50,blank=True, null=True)
     edad= models.IntegerField()
     descripcion=RichTextField(blank=True, null=True)
-    imagen= models.ImageField(upload_to="imagenes", null=True)
+    imagen= models.ImageField(upload_to='imagenes', blank=True, null=True)
     especie=models.IntegerField(choices=opciones_especie)
     raza=models.CharField(max_length=50,blank=True, null=True)
-    
+
     def __str__(self):
         return self.nombre
 

@@ -106,22 +106,19 @@ def obteneravatar(request):
 # PUBLICACIONES
 
 @login_required
-def publicaciones(request):
-    return render (request, "blog/publicaciones.html" ,{"avatar":obteneravatar(request)})
-
-@login_required
 def publicar(request):
+    mascota=Publicaciones.objects.filter(user=request.user)
     if request.method=="POST":
         form= PublicacionesFormulario(request.POST)
         if form.is_valid():
             info= form.cleaned_data
             nombre= info["nombre"]
             edad= info["edad"]
-            descripcion= info["descripción"]
+            descripcion= info["descripcion"]
             imagen= info["imagen"]
             especie= info["especie"]
             raza= info["raza"]
-            mascota= Publicaciones(nombre=nombre,edad=edad, descripcion=descripcion, imagen=imagen, especie=especie, raza=raza,)
+            mascota= Publicaciones(nombre=nombre,edad=edad, descripcion=descripcion, imagen=imagen, especie=especie, raza=raza)
             mascota.save()
             return render(request, "blog/publicaciones.html", {"mensaje":'Publicacion Realizada con Exito'})
         else:
@@ -129,6 +126,45 @@ def publicar(request):
     else:
         form= PublicacionesFormulario()
         return render(request, "blog/publicar.html", {'formulario':form, "avatar":obteneravatar(request)})
+
+
+@login_required
+def publicaciones(request):
+    mascotas=Publicaciones.objects.all()
+    print(list(mascotas))
+    return render(request, "blog/publicaciones.html", {'mascota':mascotas, "avatar":obteneravatar(request)})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -173,6 +209,7 @@ def perrosformulario(request):
     else:
         form= PerrosFormulario()
         return render(request, "blog/perrosformulario.html", {"formulario":form})
+
 def gatosformulario(request):
 
     if request.method=="POST":
@@ -189,6 +226,7 @@ def gatosformulario(request):
     else:
         form= GatosFormulario()
         return render(request, "blog/gatosformulario.html", {"formulario":form})
+
 def usuariosformulario(request):
 
     if request.method=="POST":
