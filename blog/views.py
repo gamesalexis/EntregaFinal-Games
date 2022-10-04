@@ -89,8 +89,7 @@ def agregaravatar(request):
             avatar.save()
             return render(request, 'blog/inicio.html', {'usuario':request.user, 'mensaje':'avatar cambiado@', "avatar": avatar.imagen.url})
         else:
-            return render(request, 'blog/agregaravatar.html', {'formulario':formulario, 'mensaje':'FORMULARIO INVALIDO'})
-        
+            return render(request, 'blog/agregaravatar.html', {'formulario':formulario, 'mensaje':'FORMULARIO INVALIDO'})  
     else:
         formulario=AvatarForm()
         return render(request, "blog/agregaravatar.html", {"formulario":formulario, "usuario":request.user, "avatar": obteneravatar(request)})
@@ -112,7 +111,24 @@ def publicaciones(request):
 
 @login_required
 def publicar(request):
-    return render (request, "blog/publicar.html" ,{"avatar":obteneravatar(request)})
+    if request.method=="POST":
+        form= PublicacionesFormulario(request.POST)
+        if form.is_valid():
+            info= form.cleaned_data
+            nombre= info["nombre"]
+            edad= info["edad"]
+            descripcion= info["descripción"]
+            imagen= info["imagen"]
+            especie= info["especie"]
+            raza= info["raza"]
+            mascota= Publicaciones(nombre=nombre,edad=edad, descripcion=descripcion, imagen=imagen, especie=especie, raza=raza,)
+            mascota.save()
+            return render(request, "blog/publicaciones.html", {"mensaje":'Publicacion Realizada con Exito'})
+        else:
+            return render(request, 'blog/publicar.html', {'formulario':form,'mensaje':'Formulario Invalido', "avatar":obteneravatar(request)})
+    else:
+        form= PublicacionesFormulario()
+        return render(request, "blog/publicar.html", {'formulario':form, "avatar":obteneravatar(request)})
 
 
 

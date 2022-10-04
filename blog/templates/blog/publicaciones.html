@@ -29,6 +29,7 @@
         </div>
 <form action="{% url 'perfil' %}" method="POST"> {% csrf_token %}
     <table>
+        {{ model }}
         {{ formulario.as_table }}
     </table>
     <input type="submit" value="Guardar Cambios">

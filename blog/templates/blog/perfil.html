@@ -22,17 +22,32 @@
 <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0">{{ mensaje }}</h1>
         <h1 class="masthead-heading text-uppercase mb-0">Editar de Perfil</h1>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
         </div>
-<form action="{% url 'perfil' %}" method="POST"> {% csrf_token %}
-    <table>
-        {{ formulario.as_table }}
-    </table>
-    <input type="submit" value="Guardar Cambios">
-</form>
+    </header>
+    <section class="page-section portfolio" id="portfolio">
+               <div class="container">
+                   <!-- Portfolio Section Heading-->
+                   <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"></h2>
+                   <!-- Portfolio Grid Items-->
+                   <div class="row justify-content-center">
+                       <!-- Portfolio Item 1-->
+                       <div class="col-md-6 col-lg-4 mb-5">
+                           <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
 
+                               <form action="{% url 'perfil' %}" method="POST"> {% csrf_token %}
+                                   <table>
+                                       {{ formulario.as_table  }}
+                                   </table>
+                                   <input type="submit" value="Publicar">
+                               </form>
+                               
+                           </div>
+                       </div>
+   <h2>{{ mensaje }}</h2>
 <h2>{{ mensaje }}</h2>
 
 

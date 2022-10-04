@@ -1,29 +1,14 @@
-from django import forms
-from django.contrib.auth.forms import  UserCreationForm
+
+from tkinter import Widget
+from turtle import textinput
+from django import forms 
+from django.contrib.auth.forms import  *
 from django.contrib.auth.models import User
-
-class PerrosFormulario(forms.Form):
-    Nombre= forms.CharField(max_length=50)
-    Raza= forms.CharField(max_length=50)
-    Tamano=forms.CharField(max_length=50)
-    Edad= forms.IntegerField()
-        
-class GatosFormulario(forms.Form):
-    Nombre= forms.CharField(max_length=50)
-    Raza= forms.CharField(max_length=50)
-    Tamano=forms.CharField(max_length=50)
-    Edad= forms.IntegerField()
-
-class UsuariosFormulario(forms.Form):
-    Nombre= forms.CharField(max_length=50)
-    Apellido= forms.CharField(max_length=50)
-    Sueldo=forms.CharField(max_length=50)
-    Edad= forms.IntegerField()
-    Direccion= forms.CharField(max_length=50)
-    Email= forms.EmailField()
+from ckeditor.fields import RichTextField
+from .models import *
 
 #ULTIMA ENTREGA
-
+#LOGIN LOGOUT
 class UserRegisterForm(UserCreationForm):
     first_name=forms.CharField(label='Nombre')
     last_name=forms.CharField(label='Apellido')
@@ -50,3 +35,51 @@ class UserEditForm(UserCreationForm):
 
 class AvatarForm(forms.Form):
     imagen= forms.ImageField(label="Imagen")
+
+
+#PUBLICACIONES 
+
+class PublicacionesFormulario(forms.ModelForm):
+
+    class Meta:
+        model = Publicaciones
+        #fields = '__all__'
+        fields = ['nombre', 'edad','especie','raza']
+        #help_texts = {k:"" for k in fields}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#PRIMERA ENTREGA
+class PerrosFormulario(forms.Form):
+    Nombre= forms.CharField(max_length=50)
+    Raza= forms.CharField(max_length=50)
+    Tamano=forms.CharField(max_length=50)
+    Edad= forms.IntegerField()
+        
+class GatosFormulario(forms.Form):
+    Nombre= forms.CharField(max_length=50)
+    Raza= forms.CharField(max_length=50)
+    Tamano=forms.CharField(max_length=50)
+    Edad= forms.IntegerField()
+
+class UsuariosFormulario(forms.Form):
+    Nombre= forms.CharField(max_length=50)
+    Apellido= forms.CharField(max_length=50)
+    Sueldo=forms.CharField(max_length=50)
+    Edad= forms.IntegerField()
+    Direccion= forms.CharField(max_length=50)
+    Email= forms.EmailField()
