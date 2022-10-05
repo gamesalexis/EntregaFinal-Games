@@ -41,10 +41,17 @@ class AvatarForm(forms.Form):
 #PUBLICACIONES 
 
 class PublicacionesFormulario(forms.ModelForm):
-
+    
+    #nombre=forms.CharField()
+    #edad= forms.IntegerField()
+    #descripcion=forms.CharField()
+    #imagen= forms.ImageField()
+    #especie=forms.IntegerField()
+    #raza=forms.CharField()
+    imagen= forms.ImageField(label="Imagen")
     class Meta:
         model = Publicaciones
-        fields = ['nombre', 'edad','especie','raza', 'descripcion', 'imagen']
+        fields = ['nombre', 'edad','especie','raza', 'descripcion'] #'imagen'
 
 
 

@@ -1,3 +1,4 @@
+from pyexpat import model
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
@@ -20,8 +21,8 @@ class Publicaciones(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     nombre=models.CharField(max_length=50,blank=True, null=True)
     edad= models.IntegerField()
-    descripcion=RichTextField(blank=True, null=True)
-    imagen= models.ImageField(upload_to='imagenes', blank=True, null=True)
+    descripcion=RichTextField()
+    imagen= models.ImageField(upload_to='imagenes')
     especie=models.IntegerField(choices=opciones_especie)
     raza=models.CharField(max_length=50,blank=True, null=True)
 

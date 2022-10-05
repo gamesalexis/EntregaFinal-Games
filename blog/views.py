@@ -107,20 +107,21 @@ def obteneravatar(request):
 
 @login_required
 def publicar(request):
-    mascota=Publicaciones.objects.filter(user=request.user)
+    #mascota=Publicaciones.objects.filter(user=request.user)
     if request.method=="POST":
-        form= PublicacionesFormulario(request.POST)
+        form= PublicacionesFormulario(request.POST, request.FILES)
         if form.is_valid():
             info= form.cleaned_data
             nombre= info["nombre"]
             edad= info["edad"]
             descripcion= info["descripcion"]
-            imagen= info["imagen"]
+            #imagen=Publicaciones.objects.filter(user=request.user)
             especie= info["especie"]
             raza= info["raza"]
-            mascota= Publicaciones(nombre=nombre,edad=edad, descripcion=descripcion, imagen=imagen, especie=especie, raza=raza)
+            mascota= Publicaciones(user=request.user, imagen=form.cleaned_data['imagen'], nombre=nombre,edad=edad, descripcion=descripcion, especie=especie, raza=raza)
             mascota.save()
-            return render(request, "blog/publicaciones.html", {"mensaje":'Publicacion Realizada con Exito'})
+            mascotas=Publicaciones.objects.all()
+            return render(request, "blog/publicaciones.html", {'usuario':request.user, "mensaje":'Publicacion Realizada con Exito', "imagen":obtenerimagen(request), "mascotas":mascotas})
         else:
             return render(request, 'blog/publicar.html', {'formulario':form,'mensaje':'Formulario Invalido', "avatar":obteneravatar(request)})
     else:
@@ -130,12 +131,14 @@ def publicar(request):
 
 @login_required
 def publicaciones(request):
-    mascotas=Publicaciones.objects.all()
+    mascotas=Publicaciones.objects.filter(user=request.user)
     print(list(mascotas))
-    return render(request, "blog/publicaciones.html", {'mascota':mascotas, "avatar":obteneravatar(request)})
+    return render(request, "blog/publicaciones.html", {'mascotas':mascotas, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
 
 
-
+def obtenerimagen(request):
+    imagen=Publicaciones.objects.all()
+    return imagen
 
 
 
