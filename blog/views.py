@@ -77,6 +77,8 @@ def perfil(request):
         form= UserEditForm(instance=usuario)
     return render(request, "blog/perfil.html", {"formulario":form, "usuario":usuario, "avatar":obteneravatar(request)})
 
+#Avatar
+
 @login_required
 def agregaravatar(request):
     if request.method=='POST':
@@ -144,12 +146,38 @@ def obtenerimagen(request):
             imagen=lista[img].imagen.url
     return imagen
 
+@login_required
+def eliminarpublicacion(request, id):
+    mascota=Publicaciones.objects.get(id=id)
+    mascota.delete()
+    mascotas=Publicaciones.objects.all()
+    return render(request, "blog/publicaciones.html", {"mascotas":mascotas, "avatar":obteneravatar(request)})
 
 
 
-
-
-
+@login_required
+def editarpublicacion(request, id):
+    mascota=Publicaciones.objects.get(id=id)
+    if request.method=="POST":
+        form= PublicacionesFormulario(request.POST, request.FILES)
+        if form.is_valid():
+            info= form.cleaned_data
+            mascota.nombre= info["nombre"]
+            mascota.edad= info["edad"]
+            mascota.descripcion= info["descripcion"]
+            mascota.imagen=info["imagen"]
+            mascota.especie= info["especie"]
+            mascota.raza= info["raza"]
+            #mascota= Publicaciones(user=request.user, imagen=form.cleaned_data['imagen'], nombre=nombre,edad=edad, descripcion=descripcion, especie=especie, raza=raza)
+            mascota.save()
+            mascotas=Publicaciones.objects.all()
+            return render(request, "blog/publicaciones.html", {'usuario':request.user, "mensaje":'Edicion Realizada con Exito', "mascotas":mascotas})
+    else:
+        form= PublicacionesFormulario(initial={"nombre":mascota.nombre, "edad":mascota.edad, "especie":mascota.especie, "raza":mascota.raza, "descripcion":mascota.descripcion, "imagen":mascota.imagen, })
+        return render(request, 'blog/editarpublicacion.html', {'formulario':form,'mascota':mascota, "avatar":obteneravatar(request)})
+    #else:
+        #form= PublicacionesFormulario()
+        #return render(request, "blog/publicar.html", {'formulario':form, "avatar":obteneravatar(request)})
 
 
 

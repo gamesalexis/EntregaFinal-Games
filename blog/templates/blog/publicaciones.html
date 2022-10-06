@@ -44,7 +44,9 @@
 {% if mascotas %}
 <ul>
     {% for mascota in mascotas %}
-         <h4><img src="../media/{{ mascota.imagen }}" width="80px"> {{ mascota.nombre }}, Edad: {{ mascota.edad }}</h4>
+         <h4><img src="../media/{{ mascota.imagen }}" width="80px"> {{ mascota.nombre }}, Edad: {{ mascota.edad }}</h4> 
+         <a class="btn btn-danger" href="{% url 'eliminarpublicacion' mascota.id %}">Eliminar Publicacion</a>
+         <a class="btn btn-warning" href="{% url 'editarpublicacion' mascota.id %}">Editar Publicacion</a>
     {% endfor %}
 </ul>
 
@@ -52,5 +54,6 @@
 <p>No Tiene Publicaciones Vigentes</p>
 
 {% endif %}
+<a class="btn btn-success" href="{% url 'publicar' %}">Nueva Publicacion</a>
 </section>
 {% endblock %}

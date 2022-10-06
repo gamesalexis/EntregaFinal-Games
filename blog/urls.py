@@ -21,7 +21,8 @@ urlpatterns = [
    #PUBLICACIONES
     path("publicaciones/", publicaciones, name="publicaciones"),
     path("publicar/", publicar, name="publicar"),
-
+    path('eliminarpublicacion/<id>', eliminarpublicacion, name='eliminarpublicacion'),
+    path('editarrpublicacion/<id>', editarpublicacion, name='editarpublicacion'),
 
 
 
