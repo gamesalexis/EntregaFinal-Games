@@ -23,7 +23,7 @@
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Heading-->
-                <h2 class="masthead-heading text-uppercase mb-0">Tu Nuevo compañero te esta esperando!<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'login' %}">Inicia Sesion y Comenza a Adoptar</a></h2>
+                <h2 class="masthead-heading text-uppercase mb-0">Tu Nuevo compañero te esta esperando!</h2>
                 <!-- Icon Divider
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -35,23 +35,29 @@
             </div>
         </header>
         <!-- Portfolio Section-->
-        <section class="page-section portfolio" id="portfolio">
-            <div class="container">
-                <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Adopciones Disponibles</h2>
-                <!-- Portfolio Grid Items-->
-                <div class="row justify-content-center">
-                    <!-- Portfolio Item 1-->
-                    <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src={% static 'blog/assets/img/portfolio/perro1.jpg' %} alt="..." />
+        <div class="container">
+            <!-- Portfolio Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"></h2>
+            <!-- Portfolio Grid Items-->
+            <div class="row justify-content-left">
+                <!-- Portfolio Item 1-->
+                
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+{% if mascotas %}
+<ul>
+    {% for mascota in mascotas %}
+    <h4><li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'login' %}"><img src="../media/{{ mascota.imagen }}" width="200px"> {{ mascota.nombre }}: {{ mascota.edad }} años de edad, raza {{ mascota.raza }}</a></li></h4>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>No Tiene Publicaciones Vigentes</p>
+
+{% endif %}
                         </div>
                     </div>
                     <!-- Portfolio Item 2-->
-                    <div class="col-md-6 col-lg-4 mb-5">
+                   <!--  <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
@@ -59,7 +65,7 @@
                             <img class="img-fluid" src={% static 'blog/assets/img/portfolio/perro2.jpg' %} alt="..." />
                         </div>
                     </div>
-                    <!-- Portfolio Item 3-->
+                     Portfolio Item 3
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -68,7 +74,7 @@
                             <img class="img-fluid" src={% static 'blog/assets/img/portfolio/perro3.jpg' %} alt="..." />
                         </div>
                     </div>
-                    <!-- Portfolio Item 4-->
+                    <!-- Portfolio Item 4
                     <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -77,7 +83,7 @@
                             <img class="img-fluid" src={% static 'blog/assets/img/portfolio/gato1.jpg' %} alt="..." />
                         </div>
                     </div>
-                    <!-- Portfolio Item 5-->
+                    <!-- Portfolio Item 5
                     <div class="col-md-6 col-lg-4 mb-5 mb-md-0">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal5">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -86,13 +92,13 @@
                             <img class="img-fluid" src={% static 'blog/assets/img/portfolio/gato2.jpg' %} alt="..." />
                         </div>
                     </div>
-                    <!-- Portfolio Item 6-->
+                    <!-- Portfolio Item 6
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal6">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src={% static 'blog/assets/img/portfolio/gato3.jpg' %} alt="..." />
+                            <img class="img-fluid" src={% static 'blog/assets/img/portfolio/gato3.jpg' %} alt="..." />-->
                         </div>
                     </div>
                 </div>

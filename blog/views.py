@@ -11,7 +11,9 @@ from django.contrib.auth.decorators import login_required
 # INICIO
 
 def iniciologin(request):
-    return render (request, "blog/iniciologin.html")
+    mascotas=Publicaciones.objects.all()
+    print(list(mascotas))
+    return render(request, "blog/iniciologin.html", {'mascotas':mascotas, "imagen":obtenerimagen(request)})
 
 @login_required
 def inicio(request):
@@ -131,6 +133,12 @@ def publicar(request):
         return render(request, "blog/publicar.html", {'formulario':form, "avatar":obteneravatar(request)})
 
 
+
+def listarpublicaciones(request):
+    mascotas=Publicaciones.objects.all()
+    print(list(mascotas))
+    return render(request, "blog/iniciologin.html", {'mascotas':mascotas, "imagen":obtenerimagen(request)})
+
 @login_required
 def publicaciones(request):
     mascotas=Publicaciones.objects.filter(user=request.user)
@@ -173,7 +181,7 @@ def editarpublicacion(request, id):
             mascotas=Publicaciones.objects.all()
             return render(request, "blog/publicaciones.html", {'usuario':request.user, "mensaje":'Edicion Realizada con Exito', "mascotas":mascotas})
     else:
-        form= PublicacionesFormulario(initial={"nombre":mascota.nombre, "edad":mascota.edad, "especie":mascota.especie, "raza":mascota.raza, "descripcion":mascota.descripcion, "imagen":mascota.imagen, })
+        form= PublicacionesFormulario(initial={"nombre":mascota.nombre, "edad":mascota.edad, "especie":mascota.especie, "raza":mascota.raza, "descripcion":mascota.descripcion,}) #"imagen":mascota.imagen,})
         return render(request, 'blog/editarpublicacion.html', {'formulario':form,'mascota':mascota, "avatar":obteneravatar(request)})
     #else:
         #form= PublicacionesFormulario()
