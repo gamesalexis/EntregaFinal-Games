@@ -121,7 +121,7 @@ def publicar(request):
             mascota= Publicaciones(user=request.user, imagen=form.cleaned_data['imagen'], nombre=nombre,edad=edad, descripcion=descripcion, especie=especie, raza=raza)
             mascota.save()
             mascotas=Publicaciones.objects.all()
-            return render(request, "blog/publicaciones.html", {'usuario':request.user, "mensaje":'Publicacion Realizada con Exito', "imagen":obtenerimagen(request), "mascotas":mascotas})
+            return render(request, "blog/publicaciones.html", {'usuario':request.user, "mensaje":'Publicacion Realizada con Exito', "mascotas":mascotas})
         else:
             return render(request, 'blog/publicar.html', {'formulario':form,'mensaje':'Formulario Invalido', "avatar":obteneravatar(request)})
     else:
@@ -135,11 +135,14 @@ def publicaciones(request):
     print(list(mascotas))
     return render(request, "blog/publicaciones.html", {'mascotas':mascotas, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
 
-
+@login_required
 def obtenerimagen(request):
-    imagen=Publicaciones.objects.all()
+    lista=Publicaciones.objects.filter(user=request.user)
+    if lista != 0:
+        for img in range(len(lista)):
+            print(img)
+            imagen=lista[img].imagen.url
     return imagen
-
 
 
 

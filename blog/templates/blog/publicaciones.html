@@ -44,7 +44,7 @@
 {% if mascotas %}
 <ul>
     {% for mascota in mascotas %}
-         <h4><img src="{{ imagen }}" width="80px"> {{ mascota.nombre }}, Edad: {{ mascota.edad }}</h4>
+         <h4><img src="../media/{{ mascota.imagen }}" width="80px"> {{ mascota.nombre }}, Edad: {{ mascota.edad }}</h4>
     {% endfor %}
 </ul>
 
