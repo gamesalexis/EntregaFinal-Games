@@ -8,8 +8,8 @@ from ckeditor.fields import RichTextField
 from .models import *
 
 
-#ULTIMA ENTREGA
 #LOGIN LOGOUT
+
 class UserRegisterForm(UserCreationForm):
     first_name=forms.CharField(label='Nombre')
     last_name=forms.CharField(label='Apellido')
@@ -28,11 +28,13 @@ class UserEditForm(UserCreationForm):
     email = forms.EmailField()
     password1= forms.CharField(label="Modificar Contraseña", widget=forms.PasswordInput)
     password2= forms.CharField(label="Repita Contraseña", widget=forms.PasswordInput)
-
     class Meta:
         model = User
-        fields = [ 'first_name', 'last_name','email', 'password1', 'password2',]
+        fields = [ 'first_name', 'last_name','email', 'password1', 'password2']
         help_texts = {k:"" for k in fields}
+
+
+#AVATAR
 
 class AvatarForm(forms.Form):
     imagen= forms.ImageField(label="Imagen")
@@ -42,50 +44,11 @@ class AvatarForm(forms.Form):
 
 class PublicacionesFormulario(forms.ModelForm):
     
-    #nombre=forms.CharField()
-    #edad= forms.IntegerField()
-    #descripcion=forms.CharField()
-    #imagen= forms.ImageField()
-    #especie=forms.IntegerField()
-    #raza=forms.CharField()
+
     imagen= forms.ImageField(label="Imagen")
     class Meta:
         model = Publicaciones
-        fields = ['nombre', 'edad','especie','raza', 'descripcion'] #'imagen'
+        fields = ['nombre', 'edad','especie','raza', 'descripcion']
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#PRIMERA ENTREGA
-class PerrosFormulario(forms.Form):
-    Nombre= forms.CharField(max_length=50)
-    Raza= forms.CharField(max_length=50)
-    Tamano=forms.CharField(max_length=50)
-    Edad= forms.IntegerField()
-        
-class GatosFormulario(forms.Form):
-    Nombre= forms.CharField(max_length=50)
-    Raza= forms.CharField(max_length=50)
-    Tamano=forms.CharField(max_length=50)
-    Edad= forms.IntegerField()
-
-class UsuariosFormulario(forms.Form):
-    Nombre= forms.CharField(max_length=50)
-    Apellido= forms.CharField(max_length=50)
-    Sueldo=forms.CharField(max_length=50)
-    Edad= forms.IntegerField()
-    Direccion= forms.CharField(max_length=50)
-    Email= forms.EmailField()

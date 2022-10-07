@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from blog.models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from blog.forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -19,7 +19,7 @@ def iniciologin(request):
 def inicio(request):
     mascotas=Publicaciones.objects.all()
     print(list(mascotas))
-    return render(request, "blog/inicio.html", {'mascotas':mascotas, "imagen":obtenerimagen(request), "avatar":obteneravatar(request)})
+    return render(request, "blog/inicio.html", {'mascotas':mascotas, "avatar":obteneravatar(request)})
 
 # OTROS
 
@@ -95,7 +95,8 @@ def agregaravatar(request):
                 avatarViejo[0].delete()
             avatar=Avatar(user=request.user, imagen=formulario.cleaned_data['imagen'])
             avatar.save()
-            return render(request, 'blog/inicio.html', {'usuario':request.user, 'mensaje':'avatar cambiado@', "avatar": avatar.imagen.url})
+            mascotas=Publicaciones.objects.all()
+            return render(request, 'blog/inicio.html', {'mascotas':mascotas,'usuario':request.user, 'mensaje':'avatar cambiado', "avatar": avatar.imagen.url})
         else:
             return render(request, 'blog/agregaravatar.html', {'formulario':formulario, 'mensaje':'FORMULARIO INVALIDO'})  
     else:
@@ -115,7 +116,6 @@ def obteneravatar(request):
 
 @login_required
 def publicar(request):
-    #mascota=Publicaciones.objects.filter(user=request.user)
     if request.method=="POST":
         form= PublicacionesFormulario(request.POST, request.FILES)
         if form.is_valid():
@@ -123,7 +123,6 @@ def publicar(request):
             nombre= info["nombre"]
             edad= info["edad"]
             descripcion= info["descripcion"]
-            #imagen=Publicaciones.objects.filter(user=request.user)
             especie= info["especie"]
             raza= info["raza"]
             mascota= Publicaciones(user=request.user, imagen=form.cleaned_data['imagen'], nombre=nombre,edad=edad, descripcion=descripcion, especie=especie, raza=raza)
@@ -139,7 +138,6 @@ def publicar(request):
 
 @login_required
 def mostrarpublicacion(request, id):
-    #mascotas=Publicaciones.objects.filter(user=request.user)
     mascota=Publicaciones.objects.get(id=id)
     print(mascota)
     return render(request, "blog/mostrarpublicacion.html", {'mascota':mascota, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
@@ -148,7 +146,7 @@ def mostrarpublicacion(request, id):
 def publicaciones(request):
     mascotas=Publicaciones.objects.filter(user=request.user)
     print(list(mascotas))
-    return render(request, "blog/publicaciones.html", {'mascotas':mascotas, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
+    return render(request, "blog/publicaciones.html", {'mascotas':mascotas,"avatar":obteneravatar(request)})
 
 @login_required
 def obtenerimagen(request):
@@ -163,7 +161,7 @@ def obtenerimagen(request):
 def eliminarpublicacion(request, id):
     mascota=Publicaciones.objects.get(id=id)
     mascota.delete()
-    mascotas=Publicaciones.objects.all()
+    mascotas=Publicaciones.objects.filter(user=request.user)
     return render(request, "blog/publicaciones.html", {"mascotas":mascotas, "avatar":obteneravatar(request)})
 
 
@@ -181,146 +179,10 @@ def editarpublicacion(request, id):
             mascota.imagen=info["imagen"]
             mascota.especie= info["especie"]
             mascota.raza= info["raza"]
-            #mascota= Publicaciones(user=request.user, imagen=form.cleaned_data['imagen'], nombre=nombre,edad=edad, descripcion=descripcion, especie=especie, raza=raza)
             mascota.save()
             mascotas=Publicaciones.objects.filter(user=request.user)
             return render(request, "blog/publicaciones.html", {'usuario':request.user, "mensaje":'Edicion Realizada con Exito', "mascotas":mascotas})
     else:
         form= PublicacionesFormulario(initial={"nombre":mascota.nombre, "edad":mascota.edad, "especie":mascota.especie, "raza":mascota.raza, "descripcion":mascota.descripcion,}) #"imagen":mascota.imagen,})
         return render(request, 'blog/editarpublicacion.html', {'formulario':form,'mascota':mascota, "avatar":obteneravatar(request)})
-    #else:
-        #form= PublicacionesFormulario()
-        #return render(request, "blog/publicar.html", {'formulario':form, "avatar":obteneravatar(request)})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#PRIMERA ENTREGA
-# SECCION INICIO
-def perros(request):
-    return render (request, "blog/perros.html")
-def gatos(request):
-    return render (request, "blog/gatos.html")
-def adoptantes(request):
-    return render (request, "blog/usuarios.html")
-# SECCION FORMULARIOS
-def perrosformulario(request):
-
-    if request.method=="POST":
-        form= PerrosFormulario(request.POST)
-        if form.is_valid():
-            info= form.cleaned_data
-            Nombre= info["Nombre"]
-            Raza= info["Raza"]
-            Tamano= info["Tamano"]
-            Edad= info["Edad"]
-            Perro= Perros(Nombre=Nombre, Raza=Raza, Tamano=Tamano, Edad=Edad)
-            Perro.save()
-            return render (request, "blog/perros.html", {"mensaje":"Perro Cargado exitosamente!"})
-    else:
-        form= PerrosFormulario()
-        return render(request, "blog/perrosformulario.html", {"formulario":form})
-
-def gatosformulario(request):
-
-    if request.method=="POST":
-        form= GatosFormulario(request.POST)
-        if form.is_valid():
-            info= form.cleaned_data
-            Nombre= info["Nombre"]
-            Raza= info["Raza"]
-            Tamano= info["Tamano"]
-            Edad= info["Edad"]
-            Gato= Gatos(Nombre=Nombre, Raza=Raza, Tamano=Tamano, Edad=Edad)
-            Gato.save()
-            return render (request, "blog/gatos.html", {"mensaje":"Gato Cargado exitosamente!"}) 
-    else:
-        form= GatosFormulario()
-        return render(request, "blog/gatosformulario.html", {"formulario":form})
-
-def usuariosformulario(request):
-
-    if request.method=="POST":
-        form= UsuariosFormulario(request.POST)
-        if form.is_valid():
-            info= form.cleaned_data
-            Nombre= info["Nombre"]
-            Apellido= info["Apellido"]
-            Sueldo= info["Sueldo"]
-            Edad= info["Edad"]
-            Direccion= info["Direccion"]
-            Email= info["Email"]
-            Usuario= Usuarios(Nombre=Nombre, Apellido=Apellido, Sueldo=Sueldo, Edad=Edad, Direccion=Direccion, Email=Email)
-            Usuario.save()
-            return render (request, "blog/usuarios.html", {"mensaje":"Usuario Cargado exitosamente!"})
-    else:
-        form= UsuariosFormulario()
-        return render(request, "blog/usuariosformulario.html", {"formulario":form})
-
-#SECCION BUSQUEDA
-def perrosbuscar(request):
-    return render(request, "blog/perrosbuscar.html")
-def pbuscar(request):
-
-    if request.GET["raza"]:
-        Raza=request.GET["raza"]
-        Perro=Perros.objects.filter(Raza=Raza)
-        return render(request, "blog/perrosresultados.html", {"Perro":Perro})
-    else:
-        return render(request, "blog/perrosbuscar.html", {"mensaje":"No se encuentra Perro"})
-def gatosbuscar(request):
-    return render(request, "blog/gatosbuscar.html")
-def gbuscar(request):
-
-    if request.GET["edad"]:
-        Edad=request.GET["edad"]
-        Gato=Gatos.objects.filter(Edad=Edad)
-        return render(request, "blog/gatosresultados.html", {"Gato":Gato})
-    else:
-        return render(request, "blog/gatosbuscar.html", {"mensaje":"No se encuentra Gato"})
-def usuariosbuscar(request):
-    return render(request, "blog/usuariosbuscar.html")
-def ubuscar(request):
-
-    if request.GET["nombre"]:
-        Nombre=request.GET["nombre"]
-        Usuario=Usuarios.objects.filter(Nombre=Nombre)
-        return render(request, "blog/usuariosresultados.html", {"Usuario":Usuario})
-    else:
-        return render(request, "blog/usuariosbuscar.html", {"mensaje":"No se encuentra Usuario"})
