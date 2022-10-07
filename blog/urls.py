@@ -23,7 +23,7 @@ urlpatterns = [
     path("publicar/", publicar, name="publicar"),
     path('eliminarpublicacion/<id>', eliminarpublicacion, name='eliminarpublicacion'),
     path('editarrpublicacion/<id>', editarpublicacion, name='editarpublicacion'),
-    path('listarpublicacion/<id>', listarpublicaciones, name='listarpublicacion'),
+    path('mostrarpublicacion/<id>', mostrarpublicacion, name='mostrarpublicacion'),
 
 
 

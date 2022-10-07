@@ -17,7 +17,9 @@ def iniciologin(request):
 
 @login_required
 def inicio(request):
-    return render (request, "blog/inicio.html" ,{"avatar":obteneravatar(request)})
+    mascotas=Publicaciones.objects.all()
+    print(list(mascotas))
+    return render(request, "blog/inicio.html", {'mascotas':mascotas, "imagen":obtenerimagen(request), "avatar":obteneravatar(request)})
 
 # OTROS
 
@@ -133,11 +135,12 @@ def publicar(request):
         return render(request, "blog/publicar.html", {'formulario':form, "avatar":obteneravatar(request)})
 
 
-
-def listarpublicaciones(request):
-    mascotas=Publicaciones.objects.all()
+@login_required
+def mostrarpublicacion(request, id):
+    mascotas=Publicaciones.objects.filter(user=request.user)
+    #mascotas=Publicaciones.objects.get(id=id)
     print(list(mascotas))
-    return render(request, "blog/iniciologin.html", {'mascotas':mascotas, "imagen":obtenerimagen(request)})
+    return render(request, "blog/mostrarpublicacion.html", {'mascotas':mascotas, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
 
 @login_required
 def publicaciones(request):
@@ -287,6 +290,7 @@ def usuariosformulario(request):
     else:
         form= UsuariosFormulario()
         return render(request, "blog/usuariosformulario.html", {"formulario":form})
+
 #SECCION BUSQUEDA
 def perrosbuscar(request):
     return render(request, "blog/perrosbuscar.html")
