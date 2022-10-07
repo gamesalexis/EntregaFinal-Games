@@ -51,7 +51,7 @@
                 <!-- Portfolio Item 1-->
                 
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
-
+                        <a class="btn btn-success" href="{% url 'buscar' %}">Filtrar Busqueda</a>
 <ul>
     {% for mascota in mascotas %}
     <h4><li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'mostrarpublicacion' mascota.id %}"><img src="../media/{{ mascota.imagen }}" width="200px"> {{ mascota.nombre }}: {{ mascota.edad }} años de edad, raza {{ mascota.raza }}</a></li></h4>

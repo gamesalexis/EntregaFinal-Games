@@ -186,3 +186,20 @@ def editarpublicacion(request, id):
         form= PublicacionesFormulario(initial={"nombre":mascota.nombre, "edad":mascota.edad, "especie":mascota.especie, "raza":mascota.raza, "descripcion":mascota.descripcion,}) #"imagen":mascota.imagen,})
         return render(request, 'blog/editarpublicacion.html', {'formulario':form,'mascota':mascota, "avatar":obteneravatar(request)})
 
+# SECCION BUSQUEDA
+
+@login_required
+def buscar(request):
+    
+    return render(request, "blog/buscar.html",{ "avatar":obteneravatar(request)})
+@login_required
+def pbuscar(request):
+    form= PublicacionesFormulario(request.GET)
+    if form.is_valid():
+        info= form.cleaned_data
+        especie= info["especie"]
+        mascotas=Publicaciones.objects.filter(especie=especie)
+        return render(request, "blog/inicio.html", {"mascotas":mascotas, "avatar":obteneravatar(request)})
+    else:
+        mascotas=Publicaciones.objects.all()
+        return render(request, "blog/inicio.html", {"mensaje":"No se encuentra Perro"})
