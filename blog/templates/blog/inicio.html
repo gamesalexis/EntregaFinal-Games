@@ -31,6 +31,7 @@
                 <!-- Masthead Heading
                 <h2 class="masthead-heading text-uppercase mb-0">Inicia Sesion y Comenza ha Adoptar-->
                     <h1>Adopciones Disponibles</h1>
+                    <h4>{{ mensaje }}</h4>
                 <!-- Icon Divider
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -50,17 +51,13 @@
                 <!-- Portfolio Item 1-->
                 
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
-{% if mascotas %}
+
 <ul>
     {% for mascota in mascotas %}
     <h4><li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'mostrarpublicacion' mascota.id %}"><img src="../media/{{ mascota.imagen }}" width="200px"> {{ mascota.nombre }}: {{ mascota.edad }} años de edad, raza {{ mascota.raza }}</a></li></h4>
     {% endfor %}
 </ul>
 
-{% else %}
-<p>No Tiene Publicaciones Vigentes</p>
-
-{% endif %}
                     <!-- Portfolio Item 2
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
