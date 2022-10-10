@@ -50,8 +50,19 @@
             <div class="row justify-content-left">
                 <!-- Portfolio Item 1-->
                 
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
-                        <a class="btn btn-success" href="{% url 'buscar' %}">Filtrar Busqueda</a>
+                <form action="{% url 'pbuscar2' %}" method="GET">
+                    <input lista=[1,2] name="especie">
+                    <input type="submit" value="Filtrar por especie">
+                   
+                </form>        
+                <form action="{% url 'pbuscar' %}" method="GET">
+                            <input type="number" name="edad">
+                            <input type="submit" value="Filtrar por edad">
+                           
+                        </form>
+                        <form action="{% url 'inicio' %}" method="GET">
+                            <input type="submit" value="Quitar Filtros">
+                        </form>
 <ul>
     {% for mascota in mascotas %}
     <h4><li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'mostrarpublicacion' mascota.id %}"><img src="../media/{{ mascota.imagen }}" width="200px"> {{ mascota.nombre }}: {{ mascota.edad }} años de edad, raza {{ mascota.raza }}</a></li></h4>

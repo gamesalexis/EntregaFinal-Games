@@ -50,5 +50,10 @@ class PublicacionesFormulario(forms.ModelForm):
         model = Publicaciones
         fields = ['nombre', 'edad','especie','raza', 'descripcion']
 
+#Busqueda
 
+class BusquedaFormulario(forms.Form):
 
+    class Meta:
+        model = Publicaciones
+        fields = ['especie']

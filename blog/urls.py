@@ -24,9 +24,8 @@ urlpatterns = [
     path('eliminarpublicacion/<id>', eliminarpublicacion, name='eliminarpublicacion'),
     path('editarrpublicacion/<id>', editarpublicacion, name='editarpublicacion'),
     path('mostrarpublicacion/<id>', mostrarpublicacion, name='mostrarpublicacion'),
-    path('buscar', buscar, name='buscar'),
     path('pbuscar', pbuscar, name='pbuscar'),
-
+    path('pbuscar2', pbuscar2, name='pbuscar2'),
 
 
 

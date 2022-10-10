@@ -189,17 +189,21 @@ def editarpublicacion(request, id):
 # SECCION BUSQUEDA
 
 @login_required
-def buscar(request):
-    
-    return render(request, "blog/buscar.html",{ "avatar":obteneravatar(request)})
-@login_required
 def pbuscar(request):
-    form= PublicacionesFormulario(request.GET)
-    if form.is_valid():
-        info= form.cleaned_data
-        especie= info["especie"]
+    if request.GET["edad"]:
+        edad=request.GET["edad"]
+        mascotas=Publicaciones.objects.filter(edad=edad)
+        return render(request, "blog/inicio.html", {"mascotas":mascotas, "avatar":obteneravatar(request)})
+    else:
+        mascotas=Publicaciones.objects.all()
+        return render(request, "blog/inicio.html", {"mascotas":mascotas,"mensaje":"No se encuentra Filtro"})
+
+@login_required
+def pbuscar2(request):
+    if request.GET["especie"]:
+        especie=request.GET["especie"]
         mascotas=Publicaciones.objects.filter(especie=especie)
         return render(request, "blog/inicio.html", {"mascotas":mascotas, "avatar":obteneravatar(request)})
     else:
         mascotas=Publicaciones.objects.all()
-        return render(request, "blog/inicio.html", {"mensaje":"No se encuentra Perro"})
+        return render(request, "blog/inicio.html", {"mascotas":mascotas,"mensaje":"No se encuentra Filtro"})
