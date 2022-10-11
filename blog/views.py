@@ -140,7 +140,7 @@ def publicar(request):
 def mostrarpublicacion(request, id):
     mascota=Publicaciones.objects.get(id=id)
     print(mascota)
-    return render(request, "blog/mostrarpublicacion.html", {'mascota':mascota, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
+    return render(request, "blog/mostrarpublicacion.html", {'usuario':request.user, 'mascota':mascota, "imagen":obtenerimagen(request),"avatar":obteneravatar(request)})
 
 @login_required
 def publicaciones(request):
